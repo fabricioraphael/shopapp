@@ -30,6 +30,9 @@ Accept and store (i.e., persist) a purchase transaction & provide a way to retri
     - [Java 17](https://openjdk.org/projects/jdk/17/)
     - [Spring Boot 3.2.0](https://spring.io/blog/2023/11/23/spring-boot-3-2-0-available-now)
     - [Apache Maven](https://maven.apache.org/)
+- Design
+  - [DDD - Domain Driven Design](https://en.wikipedia.org/wiki/Domain-driven_design)
+  - [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 - Database:
     - [MySQL Server](https://www.mysql.com/downloads/)
 - Tools
