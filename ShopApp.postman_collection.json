@@ -1,0 +1,71 @@
+{
+	"info": {
+		"_postman_id": "52d0f054-2672-4e0b-a256-8b9bc1af9de1",
+		"name": "ShopApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2431708",
+		"_collection_link": "https://grey-rocket-974246.postman.co/workspace/trenkus~1023a8ba-c8e7-459c-b975-f4f37d1b24d1/collection/2431708-52d0f054-2672-4e0b-a256-8b9bc1af9de1?action=share&source=collection_link&creator=2431708"
+	},
+	"item": [
+		{
+			"name": "store-purchase",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"a purchase description\",\n    \"purchaseDate\": \"2023-12-15\",\n    \"amount\": 47.34\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/purchases",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"purchases"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "retrieve purchases",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8080/purchases/9198e3d4f62949c1a1d5a7d6b89f4385?currencyConversion=Real",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"purchases",
+						"9198e3d4f62949c1a1d5a7d6b89f4385"
+					],
+					"query": [
+						{
+							"key": "currencyConversion",
+							"value": "Real"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

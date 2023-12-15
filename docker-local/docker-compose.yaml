@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  shopapp_db:
+    image: mysql:5.7
+    container_name: shopapp_db
+    hostname: shopapp_db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootroot
+      - MYSQL_DATABASE=shopcore
+      - MYSQL_TCP_PORT=3306
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
+      timeout: 5s
+      retries: 10
+    networks:
+      - shopapp_network
+
+  shopapp_core:
+    container_name: shopapp_core
+    hostname: shopapp_core
+    image: shopapp_core
+    build:
+      context: ../
+      dockerfile:  Dockerfile
+    ports:
+      - 8080:8080
+
+    depends_on:
+      shopapp_db:
+        condition: service_healthy
+
+    networks:
+      - shopapp_network
+
+
+networks:
+  shopapp_network:
+    driver: bridge

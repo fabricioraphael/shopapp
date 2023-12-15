@@ -32,21 +32,16 @@ public class TreasuryFiscalDataGatewayImpl implements FiscalRecordGateway {
         final String uri = "%s%s?filter=record_date:lte:%s,currency:eq:%s"
                 .formatted(properties.getShopapp().getTreasury().getBaseUrl(), ratesOfExchangeEndpoint, dateQuery, currencyQuery);
 
-        System.out.println(">>>>>>>>>>> properties.url " + uri);
         try {
             var response = get(uri);
             TreasuryFiscalDataResponse treasuryFiscalDataResponse = mapper.readValue(response, TreasuryFiscalDataResponse.class);
 
             var date6MonthsAgo = dateQuery.minusMonths(6);
 
-            System.out.println(">>>>>>>> treasuryResponse: " + treasuryFiscalDataResponse);
-
             var recordFiltered = treasuryFiscalDataResponse.records().stream()
                     .filter(rec -> rec.effectiveDate().isAfter(date6MonthsAgo) && rec.effectiveDate().isBefore(dateQuery))
                     .sorted(Comparator.comparing(TreasuryFiscalDataResponse.TRecord::recordDate).reversed())
                     .findFirst();
-
-            System.out.println(">>>>>>>> recordsRates: " + recordFiltered);
 
             return recordFiltered.map(rec -> FiscalRecord.FRecord.with(
                     rec.recordDate(),
