@@ -59,7 +59,7 @@ Install prerequisites:
 - Step 2: Clone the repository:
     - Step 2.1: access docker-local dir
   ```bash
-  $ cd cd shopapp/docker-local/
+  $ cd shopapp/docker-local/
   ```
     - Step 2.2: run services
   ```bash
@@ -69,6 +69,7 @@ Install prerequisites:
 ---
 Usage:
 - Import ShopApp.postman_collection.json in Postman
+- See documentation in [swagger](http://127.0.0.1:8080/swagger-ui/index.html)
 - Or with CUrl
   - Store a purchase
     ```bash
