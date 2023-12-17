@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -42,7 +43,7 @@ public class GetPurchaseByIdUseCaseTest  extends UseCaseTest {
     public void givenAValidId_whenCallsGetPurchase_shouldReturnPurchase() {
         final var expectedDescription = "Purchase Description";
         final var purchaseDate = LocalDate.now();
-        final var amount = PurchaseAmount.from(10.0);
+        final var amount = PurchaseAmount.from(BigDecimal.valueOf(10.0));
         final var currency = "Real";
         final var exchangeRate = Double.valueOf(1.5);
         final var exchangeConversionAmount = Double.valueOf(15.0);
@@ -64,7 +65,7 @@ public class GetPurchaseByIdUseCaseTest  extends UseCaseTest {
         Assertions.assertEquals(expectedId, actualPurchase.id());
         Assertions.assertEquals(expectedDescription, actualPurchase.description());
         Assertions.assertEquals(purchaseDate, actualPurchase.purchaseDate());
-        Assertions.assertEquals(amount.getValue(), actualPurchase.originalAmount());
+        Assertions.assertEquals(amount.getValue().doubleValue(), actualPurchase.originalAmount());
         Assertions.assertEquals(Double.valueOf(rate.exchangeRate()), actualPurchase.exchangeRate());
         Assertions.assertEquals(exchangeConversionAmount, actualPurchase.convertedAmount());
     }

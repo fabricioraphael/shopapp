@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
@@ -37,7 +38,7 @@ public class CreatePurchaseUseCaseTest  extends UseCaseTest {
     public void givenAValidCommand_whenCallsCreatePurchase_shouldReturnPurchaseId() {
         final var expectedDescription = "Purchase Description";
         final var purchaseDate = LocalDate.now();
-        final var amount = Double.valueOf(11.47);
+        final var amount = BigDecimal.valueOf(11.47);
 
         final var aCommand =
                 CreatePurchaseCommand.with(expectedDescription, purchaseDate, amount);
@@ -66,7 +67,7 @@ public class CreatePurchaseUseCaseTest  extends UseCaseTest {
         final var expectedErrorMessage = "'description' must be less than 50 characters";
         final var expectedErrorCount = 1;
         final LocalDate purchaseDate = LocalDate.now();
-        final var amount = Double.valueOf(11.36);
+        final var amount = BigDecimal.valueOf(11.36);
 
         final var aCommand =
                 CreatePurchaseCommand.with(expectedDescription, purchaseDate, amount);

@@ -22,6 +22,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -54,9 +55,9 @@ public class PurchaseControllerTest {
         // given
         final var expectedDescription = "Purchase Description";
         final var expectedPurchaseDate = LocalDate.now();
-        final var expectedAmount = Double.valueOf(11.47);
+        final var expectedAmount = BigDecimal.valueOf(11.47);
 
-        final var purchaseOutput = CreatePurchaseOutput.from("123", expectedDescription, expectedPurchaseDate, expectedAmount);
+        final var purchaseOutput = CreatePurchaseOutput.from("123", expectedDescription, expectedPurchaseDate, expectedAmount.doubleValue());
 
         final var aInput =
                 new PurchaseRequest(expectedDescription, expectedPurchaseDate, expectedAmount);
@@ -90,7 +91,7 @@ public class PurchaseControllerTest {
         // given
         final var expectedDescription = "Purchase Description & Purchase Description & Purchase Description";
         final var expectedPurchaseDate = LocalDate.now();
-        final var expectedAmount = Double.valueOf(11.47);
+        final var expectedAmount = BigDecimal.valueOf(11.47);
         final var expectedMessage = "'description' must be less than 50 characters";
 
         final var aInput =
@@ -126,7 +127,7 @@ public class PurchaseControllerTest {
         // given
         final var expectedDescription = "Purchase Description & Purchase Description & Purchase Description";
         final var expectedPurchaseDate = LocalDate.now();
-        final var expectedAmount = Double.valueOf(11.47);
+        final var expectedAmount = BigDecimal.valueOf(11.47);
         final var expectedMessage = "'description' must be less than 50 characters";
 
         final var aInput =
@@ -163,7 +164,7 @@ public class PurchaseControllerTest {
         // given
         final var expectedDescription = "Purchase Description";
         final var expectedPurchaseDate = LocalDate.now();
-        final var expectedAmount = PurchaseAmount.from(10.0);
+        final var expectedAmount = PurchaseAmount.from(BigDecimal.valueOf(10.0));
 
         final var aPurchase =
                 Purchase.newPurchase(expectedDescription, expectedPurchaseDate, expectedAmount);
@@ -188,7 +189,7 @@ public class PurchaseControllerTest {
                 .andExpect(header().string("Content-Type", MediaType.APPLICATION_JSON_VALUE))
                 .andExpect(jsonPath("$.id", equalTo(expectedId)))
                 .andExpect(jsonPath("$.description", equalTo(expectedDescription)))
-                .andExpect(jsonPath("$.originalAmount", equalTo(expectedAmount.getValue())));
+                .andExpect(jsonPath("$.originalAmount", equalTo(expectedAmount.getValue().doubleValue())));
 
         verify(getPurchaseByIdUseCase, times(1)).execute(eq(aCommand));
     }

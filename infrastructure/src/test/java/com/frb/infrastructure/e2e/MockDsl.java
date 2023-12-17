@@ -10,6 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.function.Function;
@@ -21,7 +22,7 @@ public interface MockDsl {
 
     MockMvc mvc();
 
-    default PurchaseID givenAPurchase(final String aDescription, final LocalDate aPurchaseDate, final Double aAmount) throws Exception {
+    default PurchaseID givenAPurchase(final String aDescription, final LocalDate aPurchaseDate, final BigDecimal aAmount) throws Exception {
         final var aRequestBody = new PurchaseRequest(aDescription, aPurchaseDate, aAmount);
         final var actualId = this.given("/purchases", aRequestBody);
         return PurchaseID.from(actualId);

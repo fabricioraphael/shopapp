@@ -32,6 +32,8 @@ public class TreasuryFiscalDataGatewayImpl implements FiscalRecordGateway {
         final String uri = "%s%s?filter=record_date:lte:%s,currency:eq:%s"
                 .formatted(properties.getShopapp().getTreasury().getBaseUrl(), ratesOfExchangeEndpoint, dateQuery, currencyQuery);
 
+        System.out.println("[GET] >>>>>>> uri: " + uri);
+
         try {
             var response = get(uri);
             TreasuryFiscalDataResponse treasuryFiscalDataResponse = mapper.readValue(response, TreasuryFiscalDataResponse.class);
@@ -63,7 +65,7 @@ public class TreasuryFiscalDataGatewayImpl implements FiscalRecordGateway {
                 .GET()
                 .uri(URI.create(url))
                 .header("Accept", "application/json")
-                .timeout(Duration.ofSeconds(3))
+                .timeout(Duration.ofSeconds(6))
                 .build();
 
         var httpClient = HttpClient.newBuilder().build();

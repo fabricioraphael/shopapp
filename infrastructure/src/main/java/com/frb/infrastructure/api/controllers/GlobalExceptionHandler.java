@@ -1,5 +1,6 @@
 package com.frb.infrastructure.api.controllers;
 
+import com.fasterxml.jackson.core.JsonParseException;
 import com.frb.domain.exceptions.DomainException;
 import com.frb.domain.exceptions.NotFoundException;
 import com.frb.domain.exceptions.PurchaseConversionException;
@@ -45,6 +46,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
     public ResponseEntity<?> handleMissingServletRequestParameterException(final MissingServletRequestParameterException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(DefaultError.with(ex.getMessage()));
+    }
+
+    @ExceptionHandler(value = JsonParseException.class)
+    public ResponseEntity<?> handleJsonParseException(final JsonParseException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(DefaultError.with("gateway parse error"));
     }
 
     record ApiError(String message, List<Error> errors) {

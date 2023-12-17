@@ -4,6 +4,8 @@ import com.frb.domain.validation.Error;
 import com.frb.domain.validation.ValidationHandler;
 import com.frb.domain.validation.Validator;
 
+import java.math.BigDecimal;
+
 public class PurchaseValidator extends Validator {
 
     public static final int NAME_MAX_LENGTH = 50;
@@ -30,7 +32,7 @@ public class PurchaseValidator extends Validator {
 
     private void checkAmountConstraints() {
         final var amount = this.purchase.getAmount();
-        if (amount.getValue() < 0.0) {
+        if (new BigDecimal(0.0).compareTo(amount.getValue())  == 1) {
             this.validationHandler().append(new Error("'amount' must be a valid positive amount"));
         }
     }

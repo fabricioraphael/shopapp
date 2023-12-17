@@ -9,6 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity(name = "Purchase")
@@ -25,7 +26,7 @@ public class PurchaseEntity {
     private LocalDate purchaseDate;
 
     @Column(name = "amount")
-    private Double amount;
+    private BigDecimal amount;
 
     public PurchaseEntity() {
     }
@@ -34,7 +35,7 @@ public class PurchaseEntity {
             final String id,
             final String description,
             final LocalDate purchaseDate,
-            final Double amount
+            final BigDecimal amount
     ) {
         this.id = id;
         this.description = description;
@@ -84,11 +85,11 @@ public class PurchaseEntity {
         this.purchaseDate = purchaseDate;
     }
 
-    public Double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(Double amount) {
+    public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
 }

@@ -1,8 +1,10 @@
 package com.frb.domain;
 
+import java.math.BigDecimal;
+
 public abstract class Money extends ValueObject {
 
-    public abstract Double getValue();
+    public abstract BigDecimal getValue();
 
     public abstract Double getValueRounded();
 

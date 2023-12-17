@@ -7,6 +7,7 @@ import com.frb.domain.validation.handler.ThrowsValidationHandler;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class PurchaseTest {
@@ -15,7 +16,7 @@ public class PurchaseTest {
     public void givenAValidParams_whenCallNewPurchase_thenInstantiateAPurchase() {
         final var expectedDescription = "Purchase Description";
         final var purchaseDate = LocalDate.now();
-        final var amount = PurchaseAmount.from(11.47);
+        final var amount = PurchaseAmount.from(BigDecimal.valueOf(11.47));
 
         final var actualPurchase =
                 Purchase.newPurchase(expectedDescription, purchaseDate, amount);
@@ -33,7 +34,7 @@ public class PurchaseTest {
         final var expectedErrorCount = 1;
         final var expectedDescription = "Purchase Description";
         final var purchaseDate = LocalDate.now();
-        final var amount = PurchaseAmount.from(-3.27);
+        final var amount = PurchaseAmount.from(BigDecimal.valueOf(-3.27));
 
         final var actualPurchase =
                 Purchase.newPurchase(expectedDescription, purchaseDate, amount);
@@ -49,7 +50,7 @@ public class PurchaseTest {
     public void givenAnInvalidPurchaseDate_whenCallNewPurchaseAndValidate_thenShouldReceiveError() {
         final var expectedDescription = "Purchase Description";
         final LocalDate purchaseDate = null;
-        final var amount = PurchaseAmount.from(11.47);
+        final var amount = PurchaseAmount.from(BigDecimal.valueOf(11.47));
 
         Assertions.assertThrows(NullPointerException.class, () -> Purchase.newPurchase(expectedDescription, purchaseDate, amount));
     }
@@ -60,7 +61,7 @@ public class PurchaseTest {
                 description more than 50 caracteres & description more than 50 caracteres
                 """;
         final LocalDate purchaseDate = LocalDate.now();
-        final var amount = PurchaseAmount.from(11.36);
+        final var amount = PurchaseAmount.from(BigDecimal.valueOf(11.36));
 
         final var expectedErrorCount = 1;
         final var expectedErrorMessage = "'description' must be less than 50 characters";
@@ -79,7 +80,7 @@ public class PurchaseTest {
     public void givenAValidEmptyDescription_whenCallNewPurchaseAndValidate_thenShouldReceiveOK() {
         final var expectedDescription = " ";
         final var purchaseDate = LocalDate.now();
-        final var amount = PurchaseAmount.from(11.47);
+        final var amount = PurchaseAmount.from(BigDecimal.valueOf(11.47));
 
         final var actualPurchase =
                 Purchase.newPurchase(expectedDescription, purchaseDate, amount);

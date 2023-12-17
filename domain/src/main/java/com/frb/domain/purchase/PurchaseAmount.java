@@ -2,23 +2,24 @@ package com.frb.domain.purchase;
 
 import com.frb.domain.Money;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Objects;
 
 public class PurchaseAmount extends Money {
-    private final Double value;
-    private static final int places = 2;
-    private static final int roundBase = 10;
+    private final BigDecimal value;
+    private static final int roundScale = 2;
 
-    private PurchaseAmount(final Double value) {
+    private PurchaseAmount(final BigDecimal value) {
         this.value = Objects.requireNonNull(value);
     }
 
-    public static PurchaseAmount from(final Double anAmount) {
+    public static PurchaseAmount from(final BigDecimal anAmount) {
         return new PurchaseAmount(anAmount);
     }
 
     @Override
-    public Double getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
@@ -29,7 +30,7 @@ public class PurchaseAmount extends Money {
 
     @Override
     public Double calcWithRateRounded(Double rate) {
-        return round(this.value*rate);
+        return round(this.value.multiply(new BigDecimal(rate)));
     }
 
     @Override
@@ -45,10 +46,7 @@ public class PurchaseAmount extends Money {
         return Objects.hash(getValue());
     }
 
-    private static Double round(Double value) {
-        long factor = (long) Math.pow(roundBase, places);
-        value = value * factor;
-        long tmp = Math.round(value);
-        return (double) tmp / factor;
+    private static Double round(final BigDecimal value) {
+        return value.setScale(roundScale, RoundingMode.HALF_UP).doubleValue();
     }
 }

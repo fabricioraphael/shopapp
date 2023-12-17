@@ -6,10 +6,12 @@ services:
     container_name: shopapp_db
     hostname: shopapp_db
     restart: unless-stopped
+    env_file: ./.env
     environment:
-      - MYSQL_ROOT_PASSWORD=rootroot
-      - MYSQL_DATABASE=shopcore
-      - MYSQL_TCP_PORT=3306
+      - MYSQL_ROOT_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - TZ=$MYSQL_DATABASE_TZ
+      - MYSQL_TCP_PORT=$MYSQL_DOCKER_PORT
     ports:
       - 3306:3306
     expose:
@@ -18,23 +20,40 @@ services:
       test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       timeout: 5s
       retries: 10
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 1024M
     networks:
       - shopapp_network
 
   shopapp_core:
+    image: shopapp_core
     container_name: shopapp_core
     hostname: shopapp_core
-    image: shopapp_core
     build:
       context: ../
       dockerfile:  Dockerfile
+    env_file: ./.env
+    environment:
+      - MYSQL_HOST=shopapp_db
+      - MYSQL_LOCAL_PORT=$MYSQL_DOCKER_PORT
+      - MYSQL_DATABASE=$MYSQL_DATABASE
+      - MYSQL_USERNAME=$MYSQL_USERNAME
+      - MYSQL_PASSWORD=$MYSQL_PASSWORD
+      - MYSQL_DATABASE_TZ=$MYSQL_DATABASE_TZ
+      - SPRING_PROFILES_ACTIVE=$SPRING_PROFILES_ACTIVE
     ports:
       - 8080:8080
-
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: 2048M
     depends_on:
       shopapp_db:
         condition: service_healthy
-
     networks:
       - shopapp_network
 
