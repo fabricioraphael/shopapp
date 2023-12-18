@@ -44,6 +44,11 @@ public class PurchaseValidator extends Validator {
 
     private void checkAmountConstraints() {
         final var amount = this.purchase.getAmount();
+
+        if (amount == null || amount.getValue() == null) {
+            this.validationHandler().append(new Error("'amount' should not be null"));
+        }
+
         if (new BigDecimal(0.0).compareTo(amount.getValue())  == 1) {
             this.validationHandler().append(new Error("'amount' must be a valid positive amount"));
         }

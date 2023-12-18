@@ -23,6 +23,7 @@ public class CreatePurchaseUseCaseImpl extends CreatePurchaseUseCase {
     public Either<Notification, CreatePurchaseOutput> execute(final CreatePurchaseCommand aCommand) {
         final var aDescription = aCommand.description();
         final var aPurchaseDate = aCommand.purchaseDate();
+
         final var anAmount = PurchaseAmount.from(aCommand.amount());
 
         final var notification = Notification.create();

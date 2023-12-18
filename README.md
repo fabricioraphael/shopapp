@@ -59,12 +59,12 @@ Install prerequisites:
 
 <br>
 
-- Step 2: Clone the repository:
+- Step 2: Accessing the docker directory:
     - Step 2.1: access docker-local dir
   ```bash
   $ cd shopapp/docker-local/
   ```
-    - Step 2.2: run services
+    - Step 2.2: run services (database and server)
   ```bash
   $ docker-compose up -d
   ```

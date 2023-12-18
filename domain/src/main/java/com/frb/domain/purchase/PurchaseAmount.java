@@ -11,7 +11,7 @@ public class PurchaseAmount extends Money {
     private static final int roundScale = 2;
 
     private PurchaseAmount(final BigDecimal value) {
-        this.value = Objects.requireNonNull(value);
+        this.value = Objects.requireNonNull(value, "'amount' should not be null");
     }
 
     public static PurchaseAmount from(final BigDecimal anAmount) {
@@ -48,5 +48,12 @@ public class PurchaseAmount extends Money {
 
     private static Double round(final BigDecimal value) {
         return value.setScale(roundScale, RoundingMode.HALF_UP).doubleValue();
+    }
+
+    @Override
+    public String toString() {
+        return "PurchaseAmount{" +
+                "value=" + value +
+                '}';
     }
 }

@@ -1,5 +1,6 @@
 package com.frb.domain.purchase;
 
+import com.frb.domain.exceptions.PurchaseConversionException;
 import com.frb.domain.purchase.PurchaseAmount;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,16 @@ public class PurchaseAmountTest {
         Assertions.assertNotNull(purchaseAmount);
         Assertions.assertNotNull(purchaseAmount.getValue());
         Assertions.assertEquals(expectedAmount, purchaseAmount.getValue());
+    }
+
+    @Test
+    public void givenANullParams_whenCallNewPurchaseAmount_thenReturnsError() {
+        final var expectedErrorMessage = "'amount' should not be null";
+        final BigDecimal amount = null;
+
+        final var actualException = Assertions.assertThrows(NullPointerException.class, () -> PurchaseAmount.from(amount));
+
+        Assertions.assertEquals(expectedErrorMessage, actualException.getMessage());
     }
 
     @Test

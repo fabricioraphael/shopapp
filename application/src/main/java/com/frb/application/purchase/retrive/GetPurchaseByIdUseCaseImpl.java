@@ -38,7 +38,7 @@ public class GetPurchaseByIdUseCaseImpl extends GetPurchaseByIdUseCase {
 
                 return PurchaseOutput.withRate(retrivedPurchase, exchangeRate, convertedAmount);
             } else {
-                throw PurchaseConversionException.create();
+                throw PurchaseConversionException.createDefault();
             }
         }
 

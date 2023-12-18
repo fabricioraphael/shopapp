@@ -80,7 +80,7 @@ public class TreasuryFiscalDataGatewayImpl implements FiscalRecordGateway {
                 .GET()
                 .uri(URI.create(url))
                 .header("Accept", "application/json")
-                .timeout(Duration.ofSeconds(6))
+                .timeout(Duration.ofSeconds(5))
                 .build();
 
         var httpClient = HttpClient.newBuilder().build();

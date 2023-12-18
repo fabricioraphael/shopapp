@@ -4,13 +4,10 @@ import com.frb.domain.validation.Error;
 
 import java.util.List;
 
-public class DomainException extends NoStacktraceException {
-
-    protected final List<Error> errors;
+public class DomainException extends ExceptionWithErrors {
 
     protected DomainException(final String aMessage, final List<Error> anErrors) {
-        super(aMessage);
-        this.errors = anErrors;
+        super(aMessage, anErrors);
     }
 
     public static DomainException with(final Error anErrors) {

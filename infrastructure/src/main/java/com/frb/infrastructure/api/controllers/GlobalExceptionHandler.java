@@ -1,10 +1,7 @@
 package com.frb.infrastructure.api.controllers;
 
 import com.fasterxml.jackson.core.JsonParseException;
-import com.frb.domain.exceptions.DomainException;
-import com.frb.domain.exceptions.FiscalDataErrorException;
-import com.frb.domain.exceptions.NotFoundException;
-import com.frb.domain.exceptions.PurchaseConversionException;
+import com.frb.domain.exceptions.*;
 import com.frb.domain.validation.Error;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +43,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = PurchaseConversionException.class)
     public ResponseEntity<?> handlePurchaseConversionException(final PurchaseConversionException ex) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(DefaultError.with(ex.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiError.from(ex));
     }
 
     @ExceptionHandler(value = MissingServletRequestParameterException.class)
@@ -77,7 +74,7 @@ public class GlobalExceptionHandler {
     }
 
     record ApiError(String message, List<Error> errors) {
-        static ApiError from(final DomainException ex) {
+        static ApiError from(final ExceptionWithErrors ex) {
             return new ApiError(ex.getMessage(), ex.getErrors());
         }
 

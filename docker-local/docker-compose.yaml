@@ -23,8 +23,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.1'
-          memory: 1024M
+          cpus: '1.0'
+          memory: 512M
     networks:
       - shopapp_network
 
@@ -49,8 +49,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.1'
-          memory: 2048M
+          cpus: '1.0'
+          memory: 1024M
     depends_on:
       shopapp_db:
         condition: service_healthy
