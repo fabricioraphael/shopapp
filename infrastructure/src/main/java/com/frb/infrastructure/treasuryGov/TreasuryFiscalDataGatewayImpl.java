@@ -6,6 +6,7 @@ import com.frb.domain.fiscalRecord.FiscalRecord;
 import com.frb.domain.fiscalRecord.FiscalRecordGateway;
 import com.frb.infrastructure.api.controllers.GlobalExceptionHandler;
 import com.frb.infrastructure.configuration.Properties;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -37,6 +38,7 @@ public class TreasuryFiscalDataGatewayImpl implements FiscalRecordGateway {
     }
 
     @Override
+    @CircuitBreaker(name = "treasuryFiscalDataRates", fallbackMethod = "fallbackTreasuryFiscalDataRates")
     public Optional<FiscalRecord.FRecord> findRatesOfExchangeByDate(final LocalDate dateQuery, final String currencyQuery) {
         final String uri = "%s%s?filter=record_date:lte:%s,currency:eq:%s"
                 .formatted(properties.getShopapp().getTreasury().getBaseUrl(), ratesOfExchangeEndpoint, dateQuery, currencyQuery);
@@ -65,6 +67,11 @@ public class TreasuryFiscalDataGatewayImpl implements FiscalRecordGateway {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private Optional<FiscalRecord.FRecord> fallbackTreasuryFiscalDataRates(final LocalDate dateQuery, final String currencyQuery, final Throwable throwable) {
+        log.warn("[fallbackTreasuryFiscalDataRates] The circuit is OPEN");
+        throw FiscalDataErrorException.with("third partner gateway error. circuit is open.");
     }
 
     private HttpResponse<String> get(final String url) throws IOException, InterruptedException {

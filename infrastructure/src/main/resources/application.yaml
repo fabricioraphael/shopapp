@@ -12,6 +12,24 @@ spring:
     hibernate: 
       ddl-auto: update
     
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
+      registerHealthIndicator: true
+  instances:
+    treasuryFiscalDataRates:
+      registerHealthIndicator: true
+      slidingWindowSize: 5
+      permittedNumberOfCallsInHalfOpenState: 3
+      slidingWindowType: TIME_BASED
+      minimumNumberOfCalls: 5
+      waitDurationInOpenState: 45s
+      failureRateThreshold: 50
+      eventConsumerBufferSize: 10
+
+
 shopapp:
   treasury:
     baseUrl: https://api.fiscaldata.treasury.gov/services
