@@ -2,11 +2,15 @@ package com.frb.infrastructure.api.controllers;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.frb.domain.exceptions.DomainException;
+import com.frb.domain.exceptions.FiscalDataErrorException;
 import com.frb.domain.exceptions.NotFoundException;
 import com.frb.domain.exceptions.PurchaseConversionException;
 import com.frb.domain.validation.Error;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -17,6 +21,8 @@ import java.util.List;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(value = NotFoundException.class)
     public ResponseEntity<?> handleNotFoundException(final NotFoundException ex) {
@@ -51,6 +57,23 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = JsonParseException.class)
     public ResponseEntity<?> handleJsonParseException(final JsonParseException ex) {
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(DefaultError.with("gateway parse error"));
+    }
+
+    @ExceptionHandler(value = FiscalDataErrorException.class)
+    public ResponseEntity<?> handleFiscalDataErrorException(final FiscalDataErrorException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(DefaultError.with(ex.getMessage()));
+    }
+
+    @ExceptionHandler(value = NullPointerException.class)
+    public ResponseEntity<?> handleNullPointerException(final NullPointerException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(DefaultError.with(ex.getMessage()));
+    }
+
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public ResponseEntity<?> handleHttpMessageNotReadableException(final HttpMessageNotReadableException ex) {
+        log.error(ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(DefaultError.with("invalid request body"));
     }
 
     record ApiError(String message, List<Error> errors) {

@@ -1,11 +1,11 @@
 package com.frb.infrastructure.api.controllers;
 
-import com.frb.domain.validation.handler.Notification;
 import com.frb.application.purchase.create.CreatePurchaseCommand;
 import com.frb.application.purchase.create.CreatePurchaseOutput;
 import com.frb.application.purchase.create.CreatePurchaseUseCase;
 import com.frb.application.purchase.retrive.GetPurchaseByIdUseCase;
 import com.frb.application.purchase.retrive.RetrivePurchaseCommand;
+import com.frb.domain.validation.handler.Notification;
 import com.frb.infrastructure.api.PurchaseAPI;
 import com.frb.infrastructure.purchase.models.PurchaseRequest;
 import com.frb.infrastructure.purchase.models.PurchaseResponse;

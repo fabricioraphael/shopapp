@@ -60,9 +60,9 @@ public class CreatePurchaseUseCaseTest  extends UseCaseTest {
     }
 
     @Test
-    public void givenAInvalidDescription_whenCallsCreatePurchase_thenShouldReturnDomainException() {
+    public void givenABiggerDescription_whenCallsCreatePurchase_thenShouldReturnDomainException() {
         final var expectedDescription = """
-                description more than 50 caracteres & description more than 50 caracteres
+                description more than 50 caracteres & description more than 50 caracteres!!!
                 """;
         final var expectedErrorMessage = "'description' must be less than 50 characters";
         final var expectedErrorCount = 1;
@@ -76,6 +76,43 @@ public class CreatePurchaseUseCaseTest  extends UseCaseTest {
 
         Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
         Assertions.assertEquals(expectedErrorMessage, notification.firstError().message());
+
+        Mockito.verify(purchaseGateway, times(0)).create(any());
+    }
+
+    @Test
+    public void givenAInvalidAmount_whenCallsCreatePurchase_thenShouldReturnDomainException() {
+        final var expectedDescription = """
+                a purchase description
+                """;
+        final var expectedErrorMessage = "'amount' must be a valid positive amount";
+        final var expectedErrorCount = 1;
+        final LocalDate purchaseDate = LocalDate.now();
+        final var amount = BigDecimal.valueOf(-1.5);
+
+        final var aCommand =
+                CreatePurchaseCommand.with(expectedDescription, purchaseDate, amount);
+
+        final var notification = useCase.execute(aCommand).getLeft();
+
+        Assertions.assertEquals(expectedErrorCount, notification.getErrors().size());
+        Assertions.assertEquals(expectedErrorMessage, notification.firstError().message());
+
+        Mockito.verify(purchaseGateway, times(0)).create(any());
+    }
+
+    @Test
+    public void givenAInvalidPurchaseDate_whenCallsCreatePurchase_thenShouldReturnDomainException() {
+        final var expectedDescription = """
+                a purchase description
+                """;
+        final LocalDate purchaseDate = null;
+        final var amount = BigDecimal.valueOf(12.23);
+
+        final var aCommand =
+                CreatePurchaseCommand.with(expectedDescription, purchaseDate, amount);
+
+        Assertions.assertThrows(NullPointerException.class, () -> useCase.execute(aCommand));
 
         Mockito.verify(purchaseGateway, times(0)).create(any());
     }

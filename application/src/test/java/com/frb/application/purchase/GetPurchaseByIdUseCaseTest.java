@@ -40,7 +40,7 @@ public class GetPurchaseByIdUseCaseTest  extends UseCaseTest {
     }
 
     @Test
-    public void givenAValidId_whenCallsGetPurchase_shouldReturnPurchase() {
+    public void givenAValidPurchaseId_whenCallsGetPurchase_shouldReturnPurchase() {
         final var expectedDescription = "Purchase Description";
         final var purchaseDate = LocalDate.now();
         final var amount = PurchaseAmount.from(BigDecimal.valueOf(10.0));

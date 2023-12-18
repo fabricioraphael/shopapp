@@ -19,14 +19,26 @@ public class PurchaseValidator extends Validator {
     @Override
     public void validate() {
         checkDescriptionConstraints();
+        checkPurchaseDate();
         checkAmountConstraints();
     }
 
     private void checkDescriptionConstraints() {
         final var description = this.purchase.getDescription();
-        final int length = description.trim().length();
-        if (length > NAME_MAX_LENGTH) {
-            this.validationHandler().append(new Error("'description' must be less than 50 characters"));
+
+        if (description != null){
+            final int length = description.trim().length();
+            if (length > NAME_MAX_LENGTH) {
+                this.validationHandler().append(new Error("'description' must be less than 50 characters"));
+            }
+        }
+    }
+
+    private void checkPurchaseDate() {
+        final var purchaseDate = this.purchase.getPurchaseDate();
+
+        if (purchaseDate == null) {
+            this.validationHandler().append(new Error("'purchaseDate' should not be null"));
         }
     }
 

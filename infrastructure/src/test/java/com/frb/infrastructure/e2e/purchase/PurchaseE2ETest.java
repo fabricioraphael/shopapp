@@ -1,28 +1,16 @@
 package com.frb.infrastructure.e2e.purchase;
 
 
+import com.frb.infrastructure.E2ETest;
+import com.frb.infrastructure.e2e.MockDsl;
 import com.frb.infrastructure.purchase.persistence.PurchaseRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
-
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import com.frb.infrastructure.E2ETest;
-import com.frb.infrastructure.e2e.MockDsl;
-
-import java.time.LocalDate;
 
 @E2ETest
 @Testcontainers

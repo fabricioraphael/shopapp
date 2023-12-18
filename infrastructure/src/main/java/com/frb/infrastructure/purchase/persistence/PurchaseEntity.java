@@ -19,10 +19,10 @@ public class PurchaseEntity {
     @Column(name = "id", nullable = false)
     private String id;
 
-    @Column(name = "description", nullable = false, length = 4000)
+    @Column(name = "description", nullable = true, length = 50)
     private String description;
 
-    @Column(name = "purchaseDate")
+    @Column(name = "purchaseDate", nullable = false)
     private LocalDate purchaseDate;
 
     @Column(name = "amount")

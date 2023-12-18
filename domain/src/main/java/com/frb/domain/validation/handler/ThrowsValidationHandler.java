@@ -1,8 +1,8 @@
 package com.frb.domain.validation.handler;
 
 import com.frb.domain.exceptions.DomainException;
-import com.frb.domain.validation.ValidationHandler;
 import com.frb.domain.validation.Error;
+import com.frb.domain.validation.ValidationHandler;
 
 import java.util.List;
 

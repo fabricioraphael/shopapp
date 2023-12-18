@@ -20,6 +20,7 @@ public class Purchase extends AggregateRoot<PurchaseID> implements Cloneable {
         super(anId);
         this.description = aDescription;
         this.purchaseDate = Objects.requireNonNull(aPurchaseDate, "'purchaseDate' should not be null");
+//        this.purchaseDate = aPurchaseDate;
         this.amount = anAmount;
     }
 

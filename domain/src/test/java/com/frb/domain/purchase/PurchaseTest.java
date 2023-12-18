@@ -1,4 +1,4 @@
-package com.frb.domain;
+package com.frb.domain.purchase;
 
 import com.frb.domain.exceptions.DomainException;
 import com.frb.domain.purchase.Purchase;
