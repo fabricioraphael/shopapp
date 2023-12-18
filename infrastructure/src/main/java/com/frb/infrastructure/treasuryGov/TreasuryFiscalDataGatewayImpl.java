@@ -89,19 +89,4 @@ public class TreasuryFiscalDataGatewayImpl implements FiscalRecordGateway {
 
         return response;
     }
-
-//     private Optional<FiscalRecord.FRecord> filterRecord(List<TreasuryFiscalDataResponse.TRecord> records, ) {
-//         var recordFiltered = records.stream()
-//                 .filter(rec -> rec.effectiveDate().isAfter(date6MonthsAgo) && rec.effectiveDate().isBefore(dateQuery))
-//                 .sorted(Comparator.comparing(TreasuryFiscalDataResponse.TRecord::recordDate).reversed())
-//                 .findFirst();
-//
-//         return recordFiltered.map(rec -> FiscalRecord.FRecord.with(
-//                 rec.recordDate(),
-//                 rec.country(),
-//                 rec.currency(),
-//                 rec.exchangeRate(),
-//                 rec.effectiveDate()
-//         ));
-//     }
 }
